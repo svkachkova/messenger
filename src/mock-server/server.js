@@ -11,7 +11,7 @@ const options = {
 };
 
 const port = 3912;
-const host = `192.168.1.142`;
+const host = 'localhost';
 
 https
 .createServer(options, (request, response) => {

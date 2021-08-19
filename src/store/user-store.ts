@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { fetchPost } from './submit';
 
-const host: string = 'https://192.168.1.142:3912/';
+const host: string = 'https://localhost:3912/';
 
 // Todo:
 // 1. Test getting token from localStorage
