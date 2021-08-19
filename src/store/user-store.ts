@@ -1,6 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 import { fetchPost } from './submit';
 
+export type UserStoreType = {
+	login: string;
+	token: string;
+    isCreated: boolean;
+    isLogged: boolean;
+	signUpSubmit: (login: string, password: string) => void;
+	signInSubmit: (login: string, password: string) => void;
+};
+
 const host: string = 'https://localhost:3912/';
 
 // Todo:
