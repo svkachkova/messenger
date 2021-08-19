@@ -25,10 +25,10 @@ async function fetchPost(url: string, postData: PostData, callback: (response: a
         if (serverResponse.status) {
             callback(serverResponse);
         } else {
-            console.log(serverResponse.message);
+            console.error(serverResponse.message);
         }
     })
-    .catch(error => console.log(error.message));
+    .catch(error => console.error(error.message));
 }
 
 async function fetchGet(url:string, callback: (response: any) => void) {
@@ -43,10 +43,10 @@ async function fetchGet(url:string, callback: (response: any) => void) {
         if (serverResponse.status) {
             callback(serverResponse);
         } else {
-            console.log(serverResponse.message);
+            console.error(serverResponse.message);
         }
     })
-    .catch(error => console.log(error.message));
+    .catch(error => console.error(error.message));
 }
 
 export { fetchPost, fetchGet }
