@@ -1,6 +1,6 @@
 # Mock server
 
-To start server run `node src/mock-server/server.js`.
+To start server `npm run server`.
 
 Server support four users: 
 
