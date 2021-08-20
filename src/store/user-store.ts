@@ -4,10 +4,13 @@ import { fetchPost } from './submit';
 export type UserStoreType = {
 	login: string;
 	token: string;
+    contacts: string[];
     isCreated: boolean;
     isLogged: boolean;
+    signOut: () => void;
 	signUpSubmit: (login: string, password: string) => void;
 	signInSubmit: (login: string, password: string) => void;
+    getContacts: () => void;
 };
 
 const host: string = 'https://localhost:3912/';
@@ -18,11 +21,13 @@ const host: string = 'https://localhost:3912/';
 class UserStore {
     login: string;
     token: string;
+    contacts: string[]
     isCreated: boolean;
 
     constructor() {
         this.login = '';
         this.token = localStorage.getItem('token') || '';
+        this.contacts = [];
         this.isCreated = false;
 
         makeAutoObservable(this);
@@ -30,6 +35,11 @@ class UserStore {
 
     get isLogged(): boolean {
         return this.token === '' ? false : true;
+    }
+
+    signOut(): void {
+        this.login = '';
+        this.token = '';
     }
 
     async signUpSubmit(login: string, password: string) {
@@ -52,6 +62,15 @@ class UserStore {
         };
 
         await fetchPost(url, { login, password }, callback);
+    }
+
+    async getContacts() {
+        const url: string = `${host}api/getContacts`;
+        const callback = (response: any) => {
+            this.contacts = response.contacts;
+        };
+
+        await fetchPost(url, { token: this.token }, callback);
     }
 
     // *generator() {
