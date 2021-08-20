@@ -9,7 +9,7 @@ import NotFound from './not-found';
 
 const SignUp = lazy(() => import('./sign-up'));
 const SignIn = lazy(() => import('./sign-in'));
-const Somewhtere = lazy(() => import('./somewhere'));
+const Contacts = lazy(() => import('./contacts'));
 
 const App = observer(({ store }: { store: UserStoreType }) => {
 
@@ -26,11 +26,11 @@ const App = observer(({ store }: { store: UserStoreType }) => {
 				)}/>
 
 				<Route path='/signin' render={() => (
-					store.isLogged ? <Redirect to='/somewhere' /> : <SignIn store={store} />
+					store.isLogged ? <Redirect to='/contacts' /> : <SignIn store={store} />
 				)}/>
 
-				<Route path='/somewhere' render={() => (
-					store.isLogged ? <Somewhtere /> : <Redirect to='./signin' />
+				<Route path='/contacts' render={() => (
+					store.isLogged ? <Contacts store={store} /> : <Redirect to='./signin' />
 				)} />
 
 				<Route component={NotFound} />
