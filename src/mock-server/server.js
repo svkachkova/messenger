@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const createUser = require('./create-user');
 const login = require('./login');
+const getContacts = require('./get-contacts');
 
 const options = {
     key: fs.readFileSync(path.resolve('src/mock-server/key.pem')),
@@ -47,6 +48,11 @@ https
         
             if (request.url === '/api/login') {
                 const data = login(JSON.parse(body));
+                return response.end(JSON.stringify(data));
+            }
+
+            if (request.url === '/api/getContacts') {
+                const data = getContacts(JSON.parse(body));
                 return response.end(JSON.stringify(data));
             }
         });
