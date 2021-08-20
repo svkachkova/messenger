@@ -12,4 +12,11 @@ const loginToToken = new Map([
     ['waddles', 'w89ddl33s']
 ]);
 
-module.exports = { loginToPassword, loginToToken };
+const tokenToContacts = new Map();
+
+tokenToContacts.set('m89b33l', ['dipper', 'grunkle_stan', 'waddles']);
+tokenToContacts.set('d1pp33r', ['mabel', 'grunkle_stan']);
+tokenToContacts.set('st89n', ['mabel', 'dipper']);
+tokenToContacts.set('w89ddl33s', ['mabel']);
+
+module.exports = { loginToPassword, loginToToken, tokenToContacts };
