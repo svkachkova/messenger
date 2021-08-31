@@ -2,9 +2,10 @@ const https = require('https');
 const path = require('path');
 const fs = require('fs');
 
-const createUser = require('./create-user');
-const login = require('./login');
-const getContacts = require('./get-contacts');
+const createUser = require('./api/create-user');
+const login = require('./api/login');
+const getContacts = require('./api/get-contacts');
+const createContact = require('./api/create-contact');
 
 const options = {
     key: fs.readFileSync(path.resolve('src/mock-server/key.pem')),
@@ -55,6 +56,11 @@ https
                 const data = getContacts(JSON.parse(body));
                 return response.end(JSON.stringify(data));
             }
+
+            if (request.url === '/api/createContact') {
+                const data = createContact(JSON.parse(body));
+                return response.end(JSON.stringify(data));
+            }
         });
     }
 
@@ -64,3 +70,8 @@ https
 .listen(port, host, () => {
     console.log(`Server running at https://${host}:${port}/`);
 });
+
+// function wrapper(callback) {
+//     const data = callback(JSON.parse(body));
+//     return response.end(JSON.stringify(data));
+// }
