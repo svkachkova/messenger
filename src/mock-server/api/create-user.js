@@ -1,4 +1,4 @@
-const users = require('./users').loginToPassword;
+const users = require('../users').loginToPassword;
 
 function createUser({ login, password }) {
     

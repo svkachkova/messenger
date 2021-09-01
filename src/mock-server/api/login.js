@@ -1,4 +1,4 @@
-const users = require('./users');
+const users = require('../users');
 
 function login({ login, password }) {
 	console.log('request url: /api/login');

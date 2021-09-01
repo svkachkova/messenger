@@ -1,4 +1,4 @@
-const users = require('./users').tokenToContacts;
+const users = require('../users').tokenToContacts;
 
 function getContacts({ token }) {
     console.log('request url: /api/getContacts');
