@@ -1,28 +1,36 @@
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 
 import { UserStoreType } from '../store/user-store';
+import { AddContactForm } from '../components/form/add-contact-form';
 import { ContactCard } from '../components/contact-card';
 import { Button } from '../components/button';
 
 const Contacts = observer(({ store }: { store: UserStoreType }) => {
-    useEffect(() => {
-        store.getContacts();
-    }, []);
+    const [addContact, setAddContact] = useState(false);
 
     const contacts: JSX.Element[] = store.contacts.map(login => {
         return <ContactCard key={nanoid(5)} login={login} />;
     });
 
+    useEffect(() => {
+        store.getContacts();
+    }, []);
+
     return (
         <main>
             <h1>Contacts</h1>
-            <Button 
-                value='Add contact'
-                onClick={() => {}} 
-            />
+
+            {addContact ? 
+                <AddContactForm store={store} /> : 
+                <Button 
+                    value='Add contact'
+                    onClick={() => { setAddContact(true) }} 
+                />
+            }
+
             <ul>{contacts}</ul>
             <Link 
                 to='/signin'

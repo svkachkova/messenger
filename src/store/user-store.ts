@@ -11,6 +11,7 @@ export type UserStoreType = {
 	signUpSubmit: (login: string, password: string) => void;
 	signInSubmit: (login: string, password: string) => void;
     getContacts: () => void;
+    createContact: (login: string) => void;
 };
 
 const host: string = 'https://localhost:3912/';
@@ -71,6 +72,15 @@ class UserStore {
         };
 
         await fetchPost(url, { token: this.token }, callback);
+    }
+
+    async createContact(login: string) {
+        const url: string = `${host}api/createContact`; 
+        const callback = (response: any) => {
+            this.getContacts();
+        };
+
+        await fetchPost(url, { token: this.token, login }, callback);
     }
 
     // *generator() {
