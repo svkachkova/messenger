@@ -4,6 +4,8 @@ type PostData = {
     token?: string
 };
 
+const host: string = 'https://localhost:3912/';
+
 async function fetchPost(url: string, postData: PostData, callback: (response: any) => void) {
     const options: RequestInit = {
         method: 'POST',
@@ -14,7 +16,7 @@ async function fetchPost(url: string, postData: PostData, callback: (response: a
         body: JSON.stringify(postData)
     };
 
-    await fetch(url, options)
+    await fetch(host + url, options)
     .then(response => {      
         if (response.ok) {
             return response.json();
@@ -32,7 +34,7 @@ async function fetchPost(url: string, postData: PostData, callback: (response: a
 }
 
 async function fetchGet(url:string, callback: (response: any) => void) {
-    await fetch(url)
+    await fetch(host + url)
     .then(response => {      
         if (response.ok) {
             return response.json();

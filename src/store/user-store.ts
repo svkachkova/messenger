@@ -14,8 +14,6 @@ export type UserStoreType = {
     createContact: (login: string) => void;
 };
 
-const host: string = 'https://localhost:3912/';
-
 // Todo:
 // 1. Test getting token from localStorage
 
@@ -44,7 +42,7 @@ class UserStore {
     }
 
     async signUpSubmit(login: string, password: string) {
-        const url: string = `${host}api/createUser`;
+        const url: string = 'api/createUser';
         const callback = (response: any) => {
             this.login = login;
             this.isCreated = true;
@@ -54,7 +52,7 @@ class UserStore {
     }
 
     async signInSubmit(login: string, password: string) {
-        const url: string = `${host}api/login`;
+        const url: string = 'api/login';
         const callback = (response: any) => {
             this.login = login;
             this.token = response.token;
@@ -66,7 +64,7 @@ class UserStore {
     }
 
     async getContacts() {
-        const url: string = `${host}api/getContacts`;
+        const url: string = 'api/getContacts';
         const callback = (response: any) => {
             this.contacts = response.contacts;
         };
@@ -75,7 +73,7 @@ class UserStore {
     }
 
     async createContact(login: string) {
-        const url: string = `${host}api/createContact`; 
+        const url: string = 'api/createContact'; 
         const callback = (response: any) => {
             this.getContacts();
         };
