@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { SignInForm } from '../components/form/sign-in-form';
-import { UserStoreType } from '../store/user-store';
+import { AuthStoreType } from '../stores/auth-store';
 
-const SignIn = observer(({ store }: { store: UserStoreType }) => {
+const SignIn = observer(({ store }: { store: AuthStoreType }) => {
     return (
         <main>
             <h1>Sign in</h1>

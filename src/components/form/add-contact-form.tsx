@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { Button } from '../button';
-import { UserStoreType } from '../../store/user-store';
+import { ContactsStoreType } from '../../stores/contacts-store';
 
-const AddContactForm = observer(({ store }: { store: UserStoreType }) => {
+const AddContactForm = observer(({ store }: { store: ContactsStoreType }) => {
     const [inputText, setInputText] = useState('');
 
     return (

@@ -3,20 +3,21 @@ import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 
-import { UserStoreType } from '../store/user-store';
+import { StoreType } from '../stores/store';
 import { AddContactForm } from '../components/form/add-contact-form';
 import { ContactCard } from '../components/contact-card';
 import { Button } from '../components/button';
 
-const Contacts = observer(({ store }: { store: UserStoreType }) => {
+const Contacts = observer(({ store }: { store: StoreType }) => {
+    const { authStore, contactsStore } = store;
     const [addContact, setAddContact] = useState(false);
 
-    const contacts: JSX.Element[] = store.contacts.map(login => {
+    const contacts: JSX.Element[] = contactsStore.contacts.map(login => {
         return <ContactCard key={nanoid(5)} login={login} />;
     });
 
     useEffect(() => {
-        store.getContacts();
+        contactsStore.getContacts();
     }, []);
 
     return (
@@ -24,7 +25,7 @@ const Contacts = observer(({ store }: { store: UserStoreType }) => {
             <h1>Contacts</h1>
 
             {addContact ? 
-                <AddContactForm store={store} /> : 
+                <AddContactForm store={contactsStore} /> : 
                 <Button 
                     value='Add contact'
                     onClick={() => { setAddContact(true) }} 
@@ -34,7 +35,7 @@ const Contacts = observer(({ store }: { store: UserStoreType }) => {
             <ul>{contacts}</ul>
             <Link 
                 to='/signin'
-                onClick={() => { store.signOut() }}
+                onClick={() => { authStore.signOut() }}
             >Sign out</Link>
         </main>
         

@@ -5,9 +5,9 @@ import { LoginInput } from './login-input';
 import { CurrentPasswordInput } from './current-password-input';
 import { Button } from '../button';
 
-import { UserStoreType } from '../../store/user-store';
+import { AuthStoreType } from '../../stores/auth-store';
 
-const SignInForm = observer(({ store }: { store: UserStoreType }) => {
+const SignInForm = observer(({ store }: { store: AuthStoreType }) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 

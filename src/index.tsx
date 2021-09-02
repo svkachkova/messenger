@@ -5,14 +5,14 @@ import './index.css';
 import App from './containers/app';
 import reportWebVitals from './reportWebVitals';
 
-import { UserStore } from './store/user-store';
+import { Store, StoreType } from './stores/store';
 
-const userStore = new UserStore();
+const store: StoreType = new Store();
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<App store={userStore} />
+			<App store={store} />
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
