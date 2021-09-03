@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { StoreType } from '../stores/store';
+import { useStore } from '../hooks/use-store';
 
 import Promo from './promo';
 import NotFound from './not-found';
@@ -11,8 +11,8 @@ const SignUp = lazy(() => import('./sign-up'));
 const SignIn = lazy(() => import('./sign-in'));
 const Contacts = lazy(() => import('./contacts'));
 
-const App = observer(({ store }: { store: StoreType }) => {
-	const { userStore, authStore } = store;
+const App = observer(() => {
+	const { userStore } = useStore();
 
 	console.log('isCreated', userStore.isCreated);
 	console.log('isLogged', userStore.isLogged);
@@ -23,15 +23,15 @@ const App = observer(({ store }: { store: StoreType }) => {
 				<Route exact path='/' component={Promo} />
 
 				<Route path='/signup' render={() => (
-					userStore.isCreated ? <Redirect to='/signin' /> : <SignUp store={authStore} />
+					userStore.isCreated ? <Redirect to='/signin' /> : <SignUp />
 				)}/>
 
 				<Route path='/signin' render={() => (
-					userStore.isLogged ? <Redirect to='/contacts' /> : <SignIn store={authStore} />
+					userStore.isLogged ? <Redirect to='/contacts' /> : <SignIn />
 				)}/>
 
 				<Route path='/contacts' render={() => (
-					userStore.isLogged ? <Contacts store={store} /> : <Redirect to='./signin' />
+					userStore.isLogged ? <Contacts /> : <Redirect to='./signin' />
 				)} />
 
 				<Route component={NotFound} />

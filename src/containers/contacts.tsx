@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 
-import { StoreType } from '../stores/store';
+import { useStore } from '../hooks/use-store';
+
 import { AddContactForm } from '../components/form/add-contact-form';
 import { ContactCard } from '../components/contact-card';
 import { Button } from '../components/button';
 
-const Contacts = observer(({ store }: { store: StoreType }) => {
-    const { authStore, contactsStore } = store;
+const Contacts = observer(() => {
+    const { authStore, contactsStore } = useStore();
     const [addContact, setAddContact] = useState(false);
 
     const contacts: JSX.Element[] = contactsStore.contacts.map(login => {
@@ -25,7 +26,7 @@ const Contacts = observer(({ store }: { store: StoreType }) => {
             <h1>Contacts</h1>
 
             {addContact ? 
-                <AddContactForm store={contactsStore} /> : 
+                <AddContactForm /> : 
                 <Button 
                     value='Add contact'
                     onClick={() => { setAddContact(true) }} 

@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
+import { useStore } from '../../hooks/use-store';
 import { Button } from '../button';
-import { ContactsStoreType } from '../../stores/contacts-store';
 
-const AddContactForm = observer(({ store }: { store: ContactsStoreType }) => {
+const AddContactForm = observer(() => {
+    const { contactsStore } = useStore();
     const [inputText, setInputText] = useState('');
 
     return (
@@ -18,7 +19,7 @@ const AddContactForm = observer(({ store }: { store: ContactsStoreType }) => {
                 value='Add'
                 onClick={event => {
                     event.preventDefault();
-                    store.createContact(inputText);
+                    contactsStore.createContact(inputText);
                 }}
             />
         </form>

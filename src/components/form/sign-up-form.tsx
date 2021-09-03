@@ -1,13 +1,15 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 
+import { useStore } from '../../hooks/use-store';
+
 import { LoginInput } from './login-input';
 import { NewPasswordInput } from './new-password-input';
 import { Button } from '../button';
 
-import { AuthStoreType } from '../../stores/auth-store';
+const SignUpForm = observer(() => {
+    const { authStore } = useStore();
 
-const SignUpForm = observer(({ store }: { store: AuthStoreType }) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,7 +21,7 @@ const SignUpForm = observer(({ store }: { store: AuthStoreType }) => {
                 value='Sign up' 
                 onClick={event => {
                     event.preventDefault();
-                    store.signUpSubmit(login, password);
+                    authStore.signUpSubmit(login, password);
                 }}
             />
         </form>
