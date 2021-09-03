@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { SignUpForm } from '../components/form/sign-up-form';
 
-const SignUp = observer(() => {
+function SignUp() {
     return (
         <main>
             <h1>Get started</h1>
@@ -15,6 +14,6 @@ const SignUp = observer(() => {
             </p>
         </main>
     );
-});
+}
 
 export default SignUp;
