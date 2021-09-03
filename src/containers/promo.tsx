@@ -1,10 +1,10 @@
-import { Button } from '../components/button'
+import { RouteButton } from '../components/route-button'
 
 function Promo() {
     return (
         <main>
             <h1>Messenger</h1>
-            <Button value='Get started' link='/signup' />
+            <RouteButton link='/signup'>Get started</RouteButton>
         </main>
     );
 }
