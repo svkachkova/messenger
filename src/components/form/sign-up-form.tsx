@@ -21,7 +21,7 @@ const SignUpForm = observer(() => {
                 value='Sign up' 
                 onClick={event => {
                     event.preventDefault();
-                    authStore.signUpSubmit(login, password);
+                    authStore.signUp(login, password);
                 }}
             />
         </form>
