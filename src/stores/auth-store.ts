@@ -1,42 +1,44 @@
 import { makeAutoObservable } from 'mobx';
-import { fetchPost } from './submit';
+import {  ServerApi } from '../network/server-api';
 
-import { StoreType } from './store';
-import { UserStoreType } from './user-store';
-
-export type AuthStoreType = {
-	signUpSubmit: (login: string, password: string) => void;
-	signInSubmit: (login: string, password: string) => void;
-    signOut: () => void;
-}
+import { Store } from './store';
+import { UserStore } from './user-store';
 
 class AuthStore {
-    user: UserStoreType;
+    user: UserStore;
+    serverApi: ServerApi;
 
-    constructor(store: StoreType) {
+    constructor(store: Store, serverApi: ServerApi) {
         this.user = store.userStore;
+        this.serverApi = serverApi;
         makeAutoObservable(this);
     }
 
-    async signUpSubmit(login: string, password: string) {
-        const url: string = 'api/createUser';
-        const callback = (response: any) => {
-            this.user.isCreated = true;
-        };
-
-        await fetchPost(url, { login, password }, callback);
+    signUp(login: string, password: string) {
+        this.serverApi.createUser(login, password)
+        .then(response => {
+            if (response.status) {
+                this.user.isCreated = true;
+            } else {
+                console.error(response.message);
+            }
+        })
+        .catch(error => console.error('error', error.message));
     }
 
-    async signInSubmit(login: string, password: string) {
-        const url: string = 'api/login';
-        const callback = (response: any) => {
-            this.user.login = login;
-            this.user.token = response.token;
-
-            localStorage.setItem('token', response.token);
-        };
-
-        await fetchPost(url, { login, password }, callback);
+    signIn(login: string, password: string) {
+        this.serverApi.login(login, password)
+        .then(response => {
+            if (response.status) {
+                this.user.login = login;
+                this.user.token = response.token;
+    
+                localStorage.setItem('token', response.token);
+            } else {
+                console.error(response.message);
+            }
+        })
+        .catch(error => console.error('error', error.message));
     }
 
     signOut(): void {

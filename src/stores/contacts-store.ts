@@ -1,41 +1,43 @@
 import { makeAutoObservable } from 'mobx';
-import { fetchPost } from './submit';
+import { ServerApi } from '../network/server-api';
 
-import { StoreType } from './store';
-import { UserStoreType } from './user-store';
-
-export type ContactsStoreType = {
-    contacts: string[];
-    getContacts: () => void;
-    createContact: (login: string) => void;
-};
+import { Store } from './store';
+import { UserStore } from './user-store';
 
 class ContactsStore {
-    user: UserStoreType;
+    user: UserStore;
     contacts: string[];
+    serverApi: ServerApi;
 
-    constructor(store: StoreType) {
+    constructor(store: Store, serverApi: ServerApi) {
         this.user = store.userStore;
         this.contacts = [];
+        this.serverApi = serverApi;
         makeAutoObservable(this);
     }
 
-    async getContacts() {
-        const url: string = 'api/getContacts';
-        const callback = (response: any) => {
-            this.contacts = response.contacts;
-        };
-
-        await fetchPost(url, { token: this.user.token }, callback);
+    getContacts() {
+        this.serverApi.getContacts(this.user.token)
+        .then(response => {
+            if (response.status) {
+                this.contacts = response.contacts;
+            } else {
+                console.error(response.message);
+            }
+        })
+        .catch(error => console.error('error', error.message));
     }
 
-    async createContact(login: string) {
-        const url: string = 'api/createContact'; 
-        const callback = (response: any) => {
-            this.getContacts();
-        };
-
-        await fetchPost(url, { token: this.user.token, login }, callback);
+    createContact(login: string) {
+        this.serverApi.createContact(this.user.token, login)
+        .then(response => {
+            if (response.status) {
+                this.getContacts();
+            } else {
+                console.error(response.message);
+            }
+        })
+        .catch(error => console.error('error', error.message));
     }
 };
 

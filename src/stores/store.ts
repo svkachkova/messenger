@@ -1,22 +1,19 @@
-import { AuthStore, AuthStoreType } from './auth-store';
-import { ContactsStore, ContactsStoreType } from './contacts-store';
-import { UserStore, UserStoreType } from './user-store';
-
-export type StoreType = {
-    userStore: UserStoreType;
-    authStore: AuthStoreType;
-    contactsStore: ContactsStoreType;
-}
+import { AuthStore } from './auth-store';
+import { ContactsStore } from './contacts-store';
+import { UserStore } from './user-store';
+import { ServerApiImpl } from '../network/server-api';
 
 class Store {
-    userStore: UserStoreType;
-    authStore: AuthStoreType;
-    contactsStore: ContactsStoreType;
+    userStore: UserStore;
+    authStore: AuthStore;
+    contactsStore: ContactsStore;
 
     constructor() {
+        const serverApi = new ServerApiImpl();
+
         this.userStore = new UserStore();
-        this.authStore = new AuthStore(this);
-        this.contactsStore = new ContactsStore(this);
+        this.authStore = new AuthStore(this, serverApi);
+        this.contactsStore = new ContactsStore(this, serverApi);
     }
 };
 
